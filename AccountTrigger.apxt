@@ -1,0 +1,24 @@
+trigger AccountTrigger on Account (before insert) {
+    switch on Trigger.OperationType{
+        when BEFORE_INSERT{
+            for(Account acc:Trigger.new){
+                if(acc.rating=='Hot'){
+                    acc.addError(Label.Valid_Account_Rating_Hot);
+                }
+				//validation comes in the field if the field name is given in the addError
+                if(acc.AnnualRevenue==NULL||acc.AnnualRevenue<=0){	
+                    acc.AnnualRevenue.addError('Amount Cannot be Empty or less than 0');
+                }
+            }
+        }
+        when BEFORE_UPDATE{
+            
+        }
+        when AFTER_INSERT{
+            
+        }
+        when AFTER_UPDATE{
+            
+        }
+    }
+}
